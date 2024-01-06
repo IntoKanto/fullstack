@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import axios from 'axios'
+import countryService from './services/countries'
+
 import Content from './components/Content'
 
 // goes on stack
@@ -11,23 +10,24 @@ function App() {
   const [country, setCountry] = useState([])
   const [weather, setWeather] = useState([])
 
-  //console.log(countries)
+  console.log(countries)
   
 
 
   useEffect(()=> {
-    axios
-      .get('https://studies.cs.helsinki.fi/restcountries/api/all')
-      .then(res => {
-        setCountries(res.data)
-        console.log('Data received')
-        //console.log(res.data)
+    countryService
+      .getAll()
+      .then(loaded => {
+          setCountries(loaded)
+          console.log('Data received', countries)
+        
       })
+     
   },[])
 
  
 
-  const showCountries = hakuSana === '' ? [] : countries.filter(n=> n.name.common.startsWith(hakuSana))
+  const showCountries = hakuSana === '' ? [] : countries.filter(n=> n.name.common.toLowerCase().startsWith(hakuSana.toLowerCase()))
 
   const handleInput=(e)=>{
     setHakuSana(e.target.value)   

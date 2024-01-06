@@ -1,3 +1,4 @@
+
 const Content =({ countries, clicking })=>{
     if (countries.length > 10) {
         return (
@@ -21,6 +22,9 @@ const Content =({ countries, clicking })=>{
                 <li key={line}>{line}</li>
                 )}
                 <div><img src={country.flags.png}></img></div>
+                <div>
+                   <Weather />
+                </div>
             
             </div>
         )

@@ -73,6 +73,12 @@ const App = (props) => {
             setMsg(null)
           }, 5000)
         })
+        .catch(error => {
+          setEmsg(error.response.data.error)
+          setTimeout(()=> {
+            setEmsg(null)
+          }, 5000)
+        })
     }
    } 
 
@@ -119,12 +125,12 @@ const App = (props) => {
   return (
     <div>
       <h1 >Phonebook</h1>
+      <Notification msg={msg}/>
+      <ErrorNotification msg={emsg}/> 
      <Filter filter={filter} filterNames={filterNames}/>
       <h3>Add new</h3>
       <Form sub={addName} name={newName} number={newNumber} nameChange={handleNameChange} numberChange={handleNumber} /> 
       <h3>Numbers</h3>
-      <Notification msg={msg}/>
-      <ErrorNotification msg={emsg}/> 
       <Content persons={show} remove={remove}/>
     </div>
   )
