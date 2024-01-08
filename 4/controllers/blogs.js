@@ -1,23 +1,15 @@
 const mongoose = require('mongoose')
-const { error } = require('../utils/logger')
+const logger = require('../utils/logger')
 
 const blogRoutes = require('express').Router()
-
-const blogSchema = mongoose.Schema({
-    title: String,
-    author: String,
-    url: String,
-    likes: Number
-  })
-  
-  const Blog = mongoose.model('Blog', blogSchema)
+const Blog = require('../models/blog')
 
   blogRoutes.get('/', (req,res) => {
     Blog.find({})
         .then(line => {
             res.json(line)
         })
-       .catch(error => console.log(error.message))
+       .catch(error => logger.error(error.message))
   })
 
   blogRoutes.post('/', (req,res) => {
@@ -27,7 +19,7 @@ const blogSchema = mongoose.Schema({
     .then(result => 
         { res.status(201).json(result)
     })
-    .catch(error => console.log(error.message))
+    .catch(error => logger.error(error.message))
   })
   
 
